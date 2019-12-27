@@ -1,90 +1,56 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var exphbs = require('express-handlebars');
-var expressValidator = require('express-validator');
-var flash = require('connect-flash');
-var session = require('express-session');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Stragegy;
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
-//mongoose.connect('mongodb://localhost/tfg')
-//var db = mongoose.connection
+const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
+const mongoose = require('mongoose');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
 
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+const app = express();
 
-//iniciar app
-var app = express();
+//Passport config
+require('./config/passport')(passport);
 
-//Motor de vistas
-app.set('views', path.join(__dirname, 'views')); //la carpeta views gestionará nuestras vistas
-app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
-app.set('view engine','handlebars');
+//DB
+const db = require('./config/db').MongoURI
+//Conectar Mongo
+mongoose.connect(db, {useNewUrlParser:true})
+.then(()=>console.log('MongoDB conectado...'))
+.catch(err => console.log(err));
 
-//BodyParser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(cookieParser());
+//EJS
+app.use(expressLayouts);
+app.set('view engine', 'ejs');
 
-//Carpetas estaticas
-app.use(express.static(path.join(__dirname,'public'))); //css,images,jquery
+//Bodyparser
+app.use(express.urlencoded({extended: false}));
 
-//Express Sessions
+//Express Session
 app.use(session({
     secret: 'secret',
-    saveUnitialized: true,
-    resave: true
-}));
+    resave: true,
+    saveUninitialized: true
+  }));
 
-//Passport 
+//Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Express Validator
-app.use(expressValidator({
-    errorFormatter: function(param,msg,value){
-        var namespace=param.split('.'),
-        root= namespace.shift(),
-        formParam=root;
-
-        while(namespace.length){
-            formParam += '[' + namespace.shift() + ']';
-        }
-        return{
-            param: formParam,
-            msg: msg,
-            value: value
-        };
-    }
-}));
-
-//Flash
+//Connect Flash
 app.use(flash());
 
-//Global Vars
-app.use(function(req,res,next){
+//Variables globales
+app.use((req,res,next)=>{
     res.locals.success_msg=req.flash('success_msg');
     res.locals.error_msg=req.flash('error_msg');
     res.locals.error=req.flash('error');
     next();
-})
+});
 
-//Routing
-app.use('/', routes);
-app.use('/users', users);
+//ROUTES
+app.use('/', require('./routes/index'));
+app.use('/users', require('./routes/users'));
 
-//Set Port
-app.set('port',(process.env.Port || 3000));
+const PORT = process.env.PORT || 5000;
 
-app.listen(app.get('port'),function(){
-    console.log('Server started on port '+app.get('port'));
-})
-
-
-
-
-
+app.listen(PORT, console.log(`Servidor iniciado en el puerto : ${PORT}`));
