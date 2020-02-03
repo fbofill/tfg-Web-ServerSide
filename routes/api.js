@@ -56,17 +56,17 @@ router.post('/login',(req,res,next)=>{
     User.findOne({email:email})
     .then(user => {
         if(!user){
-            //Existe el usuario
-            res.json('Email incorrecto');
-            console.log('Email incorrecto');
+            //No existe el usuario
+            res.json(-1);
+            console.log('Email Incorrecta');
         }else{
             bcrypt.compare(password, user.password, (err, isMatch) => {
                 if (err) throw err;
                 if (isMatch) {
-                    res.json('Bienvenido');
+                    res.json(1);
                     console.log('Bienvenido');
                 } else {
-                    res.json('Contraseña Incorrecta');
+                    res.json(-2);
                     console.log('Contraseña Incorrecta');
                 }
               });
