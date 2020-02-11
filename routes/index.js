@@ -4,7 +4,8 @@ const {ensureAuthenticated}= require('../config/auth');
 
 
 //WELCOME
-//router.get ('/', (req, res)=> res.render('welcome'));
+router.get ('/welcome', (req, res)=> res.render('welcome'));
+
 router.get ('/',ensureAuthenticated, (req, res)=>
  res.render('dashboard',{
      name: req.user.name
