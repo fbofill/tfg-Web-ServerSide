@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+const MongoStore = require('connect-mongo')(session);
 
 
 const app = express();
@@ -17,6 +18,7 @@ const db = require('./config/db').MongoURI
 mongoose.connect(db, {useNewUrlParser:true})
 .then(()=>console.log('MongoDB conectado...'))
 .catch(err => console.log(err));
+var connection = mongoose.connection;
 
 //EJS
 app.use(expressLayouts);
@@ -29,7 +31,10 @@ app.use(express.urlencoded({extended: false}));
 app.use(session({
     secret: 'secret',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store   : new MongoStore({
+      mongooseConnection: connection
+    })
   }));
 
 //Passport
@@ -50,7 +55,9 @@ app.use((req,res,next)=>{
 //ROUTES
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
+app.use('/dashboard', require('./routes/dashboard'));
 app.use('/api', require('./routes/api'));
+app.use(express.static('public'));
 
 
 

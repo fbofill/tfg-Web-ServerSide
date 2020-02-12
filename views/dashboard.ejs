@@ -4,13 +4,31 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Cursos <span class="sr-only">(current)</span></a>
+      <div class="navbar-nav  mr-auto justify-content-between">
+        <a class="nav-item nav-link" href="#">Cursos </a>
         <a class="nav-item nav-link" href="#">Ranking</a>
-        <a href="/users/logout" class="btn btn-secondary">Cerrar sesion</a>
+      </div>
+      <div class="navbar-nav  ml-auto justify-content-between">
+        <a class="nav-item nav-link" href="#">Opciones</a>
+        <a class="nav-item nav-link" href="/users/logout" >Cerrar sesion</a>
       </div>
     </div>
   </nav>
-<h1 class="mt-4">Dashboard</h1>
+<h1 class="mt-4">CURSOS</h1>
 <p class="lead mb-3">Bienvenido <%= name %> </p>
-<a href="/users/logout" class="btn btn-secondary">Cerrar sesion</a>
+
+<div class="card-columns">
+  <% for(var i=0;i < cursos.length ;i++){%>
+  <div class="card">
+    <img class="card-img-top img-fluid" src="/img/placeholder.svg" alt="Card image cap">
+    <div class="card-body">
+      <h4 class="card-title"> <%= cursos[i] %></h4>
+      <p class="card-text">Descripción del curso</p>
+    </div>
+  </div>
+ <% }%>
+</div>
+
+<div class="container">
+    <a class="btn btn-primary btn-lg btn-block" href="/dashboard/createCurso" role="button">Crear curso</a>
+</div>

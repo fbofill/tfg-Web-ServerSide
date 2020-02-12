@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Warstwa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1920 480" style="enable-background:new 0 0 1920 480;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;}
+	.st1{opacity:0.5;}
+	.st2{fill:#007BFF;}
+	.st3{fill:url(#pattern);}
+	.st4{fill:#7FB7FF;}
+</style>
+<pattern id='pattern' x='0' y='0' width='30' height='30' viewBox='0 0 4 4' patternUnits='userSpaceOnUse'>
+    <path class='st2' fill-opacity='0.5' d='M1 3h1v1H1V3zm2-2h1v1H3V1z' />
+</pattern>
+<path class="st3" d="M0,0v480h1920V0H0z M1250,382c0,6.6-5.4,12-12,12H682c-6.6,0-12-5.4-12-12V98c0-6.6,5.4-12,12-12h556
+	c6.6,0,12,5.4,12,12V382z"/>
+<path class="st4" d="M821.4,324.2c0,0-0.2,0.2-0.4,0.8h278.9l0,0l-95.2-129.6c0,0-11.3-15.4-22.7,0l-58.8,80.2l-21.7-29.4
+	c0,0-11.3-15.4-22.7,0L821.4,324.2z"/>
+<path class="st4" d="M874.8,177.7c0-13-10.3-23.5-23.3-23.5s-23.3,10.3-23.3,23.5s10.3,23.5,23.3,23.5S874.8,190.7,874.8,177.7"/>
+</svg>
