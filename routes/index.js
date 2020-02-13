@@ -8,8 +8,11 @@ const Curso=require('../models/Curso');
 router.get ('/welcome', (req, res)=> res.render('welcome'));
 
 router.get ('/',ensureAuthenticated, (req, res)=>
- res.render('dashboard',{
-     name: req.user.name
+Curso.find({}, function(err, cursos) {
+    res.render('dashboard',{
+        name: req.user.name,
+        cursos:cursos  
+       });  
  }));
 
 //DASHBOARD
