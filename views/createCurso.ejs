@@ -4,7 +4,7 @@
         <h1 class="text-center mb-3">
           <i class="fas fa-book"></i> Crear Cruso</h1>
           <%- include('./partials/messages.ejs'); %>
-        <form action="/users/register" method="POST">
+        <form action="/dashboard/createCurso" method="POST">
           <div class="form-group">
             <label for="name">Nombre del curso</label>
             <input
@@ -28,8 +28,8 @@
             />
           </div>
           <div class="form-group">
-            <label for="nivel">Nivel</label>
-              <select class="form-control" id="nivel">
+            <label for="level">Nivel</label>
+              <select class="form-control" id="level" name="level">
                 <option value="principiante">Principiante</option>
                 <option value="intermedio">Intermedio</option>
                 <option value="avanzado">Avanzado</option>

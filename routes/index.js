@@ -1,12 +1,7 @@
 const express = require ('express');
 const router = express.Router();
 const {ensureAuthenticated}= require('../config/auth');
-
-var cursos=[
-    "Python para principantes",
-    "Python avanzado",
-    "Python para Data Science",
-];
+const Curso=require('../models/Curso');
 
 
 //WELCOME
@@ -19,9 +14,11 @@ router.get ('/',ensureAuthenticated, (req, res)=>
 
 //DASHBOARD
 router.get ('/dashboard',ensureAuthenticated, (req, res)=>
+Curso.find({}, function(err, cursos) {
  res.render('dashboard',{
      name: req.user.name,
-     cursos:cursos
+     cursos:cursos  
+    });  
  }));
 
 
