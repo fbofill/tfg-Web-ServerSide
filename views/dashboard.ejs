@@ -19,13 +19,15 @@
 
 <div class="card-columns">
   <% cursos.forEach(function(cursos){%>
-  <div class="card">
+  <a href=/curso/<%= cursos.id %>
+    <div class="card">
     <img class="card-img-top img-fluid" src="/img/placeholder.svg" alt="Card image cap">
     <div class="card-body">
       <h4 class="card-title"> <%= cursos.name %></h4>
       <p class="card-text"><%=cursos.description %></p>
     </div>
   </div>
+</a>
  <% })%>
 </div>
 
