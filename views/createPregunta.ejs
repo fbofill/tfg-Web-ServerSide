@@ -1,0 +1,68 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body">
+        <h1 class="text-center mb-3">
+          <i class="fas fa-book"></i> Crear Pregunta</h1>
+          <%- include('./partials/messages.ejs'); %>
+        <form action="/curso/createPregunta" method="POST">
+          <div class="form-group">
+            <label for="enunciado">Enunciado de la pregunta</label>
+            <textarea
+              type="textarea"
+              id="enunciado"
+              name="enunciado"
+              class="form-control"
+              placeholder="Introduce el enunciado de la pregunta"
+              value="<%= typeof name != 'undefined' ? enunciado : '' %>"
+           > </textarea>
+          </div>
+          <div class="form-group">
+            <label for="description">Opcion 1</label>
+            <input
+              type="text"
+              id="opcion1"
+              name="opcion1"
+              class="form-control"
+              placeholder="Introduce la opcion 1, por defecto la correcta"
+              value="<%= typeof text != 'undefined' ? opcion1 : '' %>"
+            />
+          </div>
+          <div class="form-group">
+            <label for="description">Opcion 2</label>
+            <input
+              type="text"
+              id="opcion2"
+              name="opcion2"
+              class="form-control"
+              placeholder="Introduce la opcion 2"
+              value="<%= typeof text != 'undefined' ? opcion2 : '' %>"
+            />
+          </div>
+          <div class="form-group">
+            <label for="description">Opcion 3</label>
+            <input
+              type="text"
+              id="opcion3"
+              name="opcion3"
+              class="form-control"
+              placeholder="Introduce la opcion 3, por defecto la correcta"
+              value="<%= typeof text != 'undefined' ? opcion3 : '' %>"
+            />
+          </div>
+          <div class="form-group">
+            <label for="description">Opcion 4</label>
+            <input
+              type="text"
+              id="opcion4"
+              name="opcion4"
+              class="form-control"
+              placeholder="Introduce la opcion 4, por defecto la correcta"
+              value="<%= typeof text != 'undefined' ? opcion4 : '' %>"
+            />
+          </div>
+          
+          <button type="submit" class="btn btn-primary btn-block">Crear pregunta</button>
+        </form>
+      </div>
+    </div>
+  </div>

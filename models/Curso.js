@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const Pregunta=require('../models/Pregunta');
+const mongoose = require('mongoose'),Schema = mongoose.Schema;
 
 const CursoSchema=new mongoose.Schema({
     name:{
@@ -13,6 +14,11 @@ const CursoSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    pregunta:[{
+        type:Schema.Types.ObjectId, 
+        ref: 'Pregunta',
+        required:true
+    }]
 });
 
 const Curso=mongoose.model('Curso',CursoSchema);

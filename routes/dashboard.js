@@ -12,7 +12,6 @@ router.get ('/createCurso',ensureAuthenticated, (req, res)=>
  //Create Curso Handler
  router.post('/createCurso',(req,res)=>{
     const{name,description,level}=req.body;
-    console.log(req.body);
     let errors=[];
 
        //comprobacion requeridos

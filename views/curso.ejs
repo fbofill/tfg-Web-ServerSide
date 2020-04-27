@@ -14,26 +14,12 @@
       </div>
     </div>
   </nav>
-<h1 class="mt-4">CURSOS</h1>
-<p class="lead mb-3">Bienvenido <%= name %> </p>
-
-
-<div class="card-columns">
-  <% cursos.forEach(function(cursos){%>
-  <div class="card">
-    <img class="card-img-top img-fluid" src="/img/placeholder.svg" alt="Card image cap">
-    <div class="card-body">
-      <a href="/curso/?id=<%= cursos.id %>">
-      <h4 class="card-title"> <%= cursos.name %></h4>
-      <p class="card-text"><%=cursos.description %></p>
-    </a>
-    </div>
-  </div>
- <% })%>
-</div>
-
+<h1 class="mt-4"><%= name %></h1>
+<p class="lead mb-3">Preguntas:
+</p>
 
 
 <div class="container">
-    <a class="btn btn-primary btn-lg btn-block" href="/dashboard/createCurso" role="button">Crear curso</a>
+  <a class="btn btn-primary btn-lg btn-block" href="/curso/createPregunta" role="button">Crear pregunta</a>
 </div>
+
