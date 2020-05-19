@@ -14,12 +14,25 @@
       </div>
     </div>
   </nav>
-<h1 class="mt-4"><%= name %></h1>
+<h1 class="mt-4"><%= cursos.name %></h1>
 <p class="lead mb-3">Preguntas:
 </p>
+<% var i=1 ;%>
+<div class="container">
+  <ul class="list-group row" >
+    <% cursos.pregunta.forEach(function(preguntas){%>
+          <a href="/preguntas/?id=<%= preguntas.id %>">
+          <li class="list-group-item col-sm-3"> PREGUNTA <%= i%></h4>
+        </a>
+        <%  i++; %>
+    
+    <% })%>
+  </ul> 
+</div>
+ <br/>
 
 
 <div class="container">
-  <a class="btn btn-primary btn-lg btn-block" href="/curso/createPregunta" role="button">Crear pregunta</a>
+  <a class="btn btn-primary btn-lg btn-block" href="/curso/createPregunta/?id=<%=cursos.id %>" role="button">Crear pregunta</a>
 </div>
 

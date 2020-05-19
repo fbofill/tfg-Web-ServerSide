@@ -52,10 +52,4 @@ router.get ('/createCurso',ensureAuthenticated, (req, res)=>
  });
 
 
-
-
-
-
-
-
 module.exports=router;

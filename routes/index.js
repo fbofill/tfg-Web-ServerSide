@@ -4,6 +4,7 @@ const {ensureAuthenticated}= require('../config/auth');
 const Curso=require('../models/Curso');
 
 
+
 //WELCOME
 router.get ('/welcome', (req, res)=> res.render('welcome'));
 

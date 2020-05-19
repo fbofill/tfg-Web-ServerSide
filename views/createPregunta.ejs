@@ -4,7 +4,7 @@
         <h1 class="text-center mb-3">
           <i class="fas fa-book"></i> Crear Pregunta</h1>
           <%- include('./partials/messages.ejs'); %>
-        <form action="/curso/createPregunta" method="POST">
+        <form action="/curso/createPregunta/?id=<%=id %>" method="POST">
           <div class="form-group">
             <label for="enunciado">Enunciado de la pregunta</label>
             <textarea
