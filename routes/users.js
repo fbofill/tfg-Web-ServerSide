@@ -54,10 +54,12 @@ router.post('/register',(req, res)=>{
                     password2
                 });
             }else{
+                let points=0;
                 const newUser= new User({
                     name,
                     email,
-                    password
+                    password,
+                    points,
                 });
                 //Hash Password
                 bcrypt.genSalt(10,(error, salt)=>

@@ -2,6 +2,7 @@ const express = require ('express');
 const router = express.Router();
 const {ensureAuthenticated}= require('../config/auth');
 const Curso=require('../models/Curso');
+const User=require('../models/User');
 
 
 
@@ -24,6 +25,17 @@ Curso.find({}, function(err, cursos) {
      cursos:cursos  
     });  
  }));
+
+ //RANKING
+ router.get ('/ranking',ensureAuthenticated, (req, res)=>
+User.find({},null,{sort:{points:'descending'}} , function(err, user) {
+ res.render('ranking',{
+    user:user
+ });  
+ }));
+
+  //OPCIONES
+  router.get ('/options', (req, res)=> res.render('options'));
 
 
 module.exports=router;
