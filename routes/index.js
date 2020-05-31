@@ -28,7 +28,7 @@ Curso.find({}, function(err, cursos) {
 
  //RANKING
  router.get ('/ranking',ensureAuthenticated, (req, res)=>
-User.find({},null,{sort:{points:'descending'}} , function(err, user) {
+User.find({points:{ $gte: 0 }},null,{sort:{points:'descending'}} , function(err, user) {
  res.render('ranking',{
     user:user
  });  

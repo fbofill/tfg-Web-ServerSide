@@ -2,15 +2,36 @@ const express = require ('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
+const {ensureAuthenticated}= require('../config/auth');
 
 //User model
 const User = require ('../models/User');
 
 //login
-router.get ('/login', (requ, res)=> res.render('login'));
+router.get ('/login', (req, res)=> res.render('login'));
 
 //REGISTER
-router.get ('/register', (requ, res)=> res.render('register'));
+router.get ('/register', (req, res)=> res.render('register'));
+
+ //EDIT USER
+router.get ('/editUser',ensureAuthenticated, (req, res)=>
+User.findOne({_id:req.user.id}, function(err, user) {
+    res.render('edit',{
+        user:user
+       });
+ }));
+
+  //DELETE USER
+  router.get ('/deleteUser',ensureAuthenticated, (req, res)=> res.render('delete'));
+  router.get ('/deleteTrue',ensureAuthenticated, function(req, res){
+      User.findByIdAndDelete(req.user._id,function(err){
+          if(err) res.render('delete',{
+              errors
+          })
+          res.redirect('/users/logout');
+      })
+  });
+ 
 
 //Register Handle
 router.post('/register',(req, res)=>{
@@ -54,12 +75,12 @@ router.post('/register',(req, res)=>{
                     password2
                 });
             }else{
-                let points=0;
+                //let points=0;
                 const newUser= new User({
                     name,
                     email,
-                    password,
-                    points,
+                    password
+                    /*points,*/
                 });
                 //Hash Password
                 bcrypt.genSalt(10,(error, salt)=>
@@ -83,6 +104,67 @@ router.post('/register',(req, res)=>{
     }
 
 });
+
+
+
+//Edit Handle
+router.post('/editUser',(req, res)=>User.findOne({_id:req.user.id},function(err,newUser){
+    const {name,email,password,password2}=req.body;
+    let errors=[];
+    let chagePass;
+ 
+    if(password && password2){ //Se ha modificado la contraseña
+        if(password !== password2){
+            errors.push({msg: 'Las contraseñas no coinciden'})
+        }
+        //tamaño contraseña
+        if(password.length < 6){
+        errors.push({msg: 'Las contraseñas debe tener al menos 6 caracteres'})
+        }
+        chagePass=true;
+    }
+    
+    if(name){//se ha actualizado el nombre
+        newUser.name=name;
+    }
+
+    if(email){//se ha modificado el mail
+        const userExist = User.findOne({email:email});
+        if(userExist.email){
+            //Existe el usuario
+            errors.push({msg: 'El email ya está registrado'})
+        }else{
+            newUser.email=email;   
+        }
+    }
+
+    if(errors.length >0){
+        res.render('edit',{
+            errors,
+            user:newUser
+        });
+    }else{
+        if(chagePass){
+            bcrypt.genSalt(10,(error, salt)=>
+            bcrypt.hash(req.body.password,salt, (error, hash)=>{
+                console.log("HASH: " + hash);
+                if(error) throw err;
+                //Convertir contraseña en hash
+                newUser.password=hash;
+                newUser.save();
+            }));
+        }else{
+        newUser.save();
+        res.redirect('/options');
+    }
+    }
+
+
+   
+    
+}));
+
+
 
 //LOGIN
 router.post('/login',(req,res,next)=>{
