@@ -1,0 +1,6 @@
+<%- include('./partials/navbar.ejs'); %>
+<h1 class="mt-4">¿Está seguro que desea eliminar este Curso?</h1>
+<div class="container">
+    <a class="btn btn-primary btn-lg btn-block" href="/curso/deleteTrue/?id=<%=id %>" role="button">SI</a>
+    <a class="btn btn-primary btn-lg btn-block" href="/curso/?id=<%=id %>" role="button">NO</a>
+  </div>

@@ -157,11 +157,7 @@ router.post('/editUser',(req, res)=>User.findOne({_id:req.user.id},function(err,
         newUser.save();
         res.redirect('/options');
     }
-    }
-
-
-   
-    
+    } 
 }));
 
 

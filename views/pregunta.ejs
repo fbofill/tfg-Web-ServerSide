@@ -1,0 +1,29 @@
+<%- include('./partials/navbar.ejs'); %>
+<h1 class="mt-4">PREGUNTA</h1>
+
+
+<div class="card" >
+    <div class="card-body">
+      <h5 class="card-title">PREGUNTA</h5>
+      <p class="card-text"><%= pregunta.enunciado %></p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"> Correcta: <%=pregunta.opcion1 %></li>
+      <li class="list-group-item"> Opcion 2: <%=pregunta.opcion2 %> </li>
+      <li class="list-group-item"> Opcion 3: <%=pregunta.opcion3 %></li>
+      <li class="list-group-item"> Opcion 4: <%=pregunta.opcion4 %></li>
+    </ul>
+  </div>
+
+</br>
+
+
+
+          
+  
+
+
+<div class="col-sm">
+    <a class="btn btn-primary btn-lg btn-block" href="/preguntas/editPregunta/?id=<%=pregunta.id %>" role="button">Editar pregunta</a>
+    <a class="btn btn-primary btn-lg btn-block" href="/preguntas/deletePregunta/?id=<%=pregunta.id %>" role="button">Eliminar pregunta</a>
+  </div>

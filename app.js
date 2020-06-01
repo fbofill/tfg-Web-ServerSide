@@ -58,6 +58,7 @@ app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
 app.use('/dashboard', require('./routes/dashboard'));
 app.use('/curso', require('./routes/curso'));
+app.use('/preguntas', require('./routes/preguntas'));
 app.use('/api', require('./routes/api'));
 app.use(express.static('public'));
 

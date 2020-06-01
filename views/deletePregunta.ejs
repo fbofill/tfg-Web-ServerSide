@@ -1,0 +1,6 @@
+<%- include('./partials/navbar.ejs'); %>
+<h1 class="mt-4">¿Está seguro que desea eliminar esta Pregunta?</h1>
+<div class="container">
+    <a class="btn btn-primary btn-lg btn-block" href="/preguntas/deleteTrue/?id=<%=pregunta.id %>" role="button">SI</a>
+    <a class="btn btn-primary btn-lg btn-block" href="/preguntas/?id=<%=pregunta.id %>" role="button">NO</a>
+  </div>

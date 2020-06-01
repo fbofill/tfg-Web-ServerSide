@@ -1,23 +1,33 @@
 <%- include('./partials/navbar.ejs'); %>
 <h1 class="mt-4"><%= cursos.name %></h1>
-<p class="lead mb-3">Preguntas:
-</p>
-<% var i=1 ;%>
-<div class="container">
-  <ul class="list-group row" >
-    <% cursos.pregunta.forEach(function(preguntas){%>
-          <a href="/preguntas/?id=<%= preguntas.id %>">
-          <li class="list-group-item col-sm-3"> PREGUNTA <%= i%></h4>
-        </a>
-        <%  i++; %>
-    
-    <% })%>
-  </ul> 
+<p class="lead mb-3">Preguntas:</p>
+
+ <% var i=1 ;%>
+ <div class="card-columns">
+  <% cursos.pregunta.forEach(function(pregunta){%>
+  <div class="card">
+    <!--img class="card-img-top img-fluid" src="/img/placeholder.svg" alt="Card image cap"-->
+    <div class="card-body">
+      <a href="/preguntas/?id=<%= pregunta%>">
+      <h4 class="card-title"> PREGUNTA <%= i%></h4>
+      <p class="card-text"><%=pregunta.enunciado %></p>
+    </a>
+    </div>
+  </div>
+  <%  i++; %>
+ <% })%>
 </div>
- <br/>
-
 
 <div class="container">
-  <a class="btn btn-primary btn-lg btn-block" href="/curso/createPregunta/?id=<%=cursos.id %>" role="button">Crear pregunta</a>
+  <div class="row">
+    <div class="col-sm">
+      <a class="btn btn-primary btn-lg btn-block" href="/curso/createPregunta/?id=<%=cursos.id %>" role="button">Crear pregunta</a>
+    
+    </div>
+    <div class="col-sm">
+      <a class="btn btn-primary btn-lg btn-block" href="/curso/editCurso/?id=<%=cursos.id %>" role="button">Editar curso</a>
+      <a class="btn btn-secondary btn-lg btn-block" href="/curso/deleteCurso/?id=<%=cursos.id %>" role="button">Eliminar curso</a>
+    </div>
+  </div>
 </div>
 
