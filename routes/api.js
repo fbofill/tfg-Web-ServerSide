@@ -8,6 +8,7 @@ const passport = require('passport');
 //User model
 const User = require ('../models/User');
 const Curso = require ('../models/Curso');
+const Pregunta = require ('../models/Pregunta');
 
 
 //GET CURSOS
@@ -21,19 +22,19 @@ Curso.find({}, function(err, cursos) {
 //API REGISTER HANDLE
 router.post('/register',(req, res)=>{
 
-const {name,email,password,password2}=req.body;
+const {name,email,password,password2,points}=req.body;
      //Validacion en cliente
      User.findOne({email:email})
      .then(user => {
          if(user){
              //Existe el usuario
              res.json('El email ya está registrado');
-             console.log('El email ya está registrado');
          }else{
              const newUser= new User({
                  name,
                  email,
-                 password
+                 password,
+                 points
              });
              //Hash Password
              bcrypt.genSalt(10,(error, salt)=>
@@ -45,7 +46,6 @@ const {name,email,password,password2}=req.body;
                  newUser.save()
                  .then(user=>{
                     res.json('Ya te has registrado y puedes iniciar session');
-                    console.log('Ya te has registrado y puedes iniciar session');
                  })
                  .catch(err =>console.log(err));
              }))
@@ -76,6 +76,30 @@ router.post('/login',(req,res,next)=>{
                     res.status(400);
                 }
               });
+        }
+        });
+});
+//Get Preguntas
+
+router.post('/getPreguntas',(req,res,next)=>{
+    var post_data =req.body;
+
+    var name = post_data.name;
+
+    Curso.findOne({name:name})
+    .then(curso => {
+        if(!curso){
+            //No existe el usuario
+            res.status(400);
+        }else{
+            Pregunta.find({_id:curso.pregunta})
+            .then(pregunta=>{
+                if(!pregunta){
+                    res.status(400);
+                }else{
+                    res.json(pregunta);
+                }
+            })
         }
         });
 });
