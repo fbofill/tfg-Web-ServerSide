@@ -7,6 +7,15 @@ const passport = require('passport');
 
 //User model
 const User = require ('../models/User');
+const Curso = require ('../models/Curso');
+
+
+//GET CURSOS
+router.get ('/getCursos/', (req, res)=>
+Curso.find({}, function(err, cursos) {
+ res.json(cursos);
+ })
+);
 
 
 //API REGISTER HANDLE
@@ -57,23 +66,18 @@ router.post('/login',(req,res,next)=>{
     .then(user => {
         if(!user){
             //No existe el usuario
-            res.json(-1);
-            console.log('Email Incorrecta');
+            res.status(400);
         }else{
             bcrypt.compare(password, user.password, (err, isMatch) => {
                 if (err) throw err;
                 if (isMatch) {
-                    res.json(1);
-                    console.log('Bienvenido');
+                    res.json(user);
                 } else {
-                    res.json(-2);
-                    console.log('Contraseña Incorrecta');
+                    res.status(400);
                 }
               });
         }
         });
-
-
 });
 
 exports.getProfile = email => 
