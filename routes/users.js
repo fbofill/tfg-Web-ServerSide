@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const {ensureAuthenticated}= require('../config/auth');
 
+
 //User model
 const User = require ('../models/User');
 
@@ -89,6 +90,7 @@ router.post('/register',(req, res)=>{
                     //Convertir contraseña en hash
                     newUser.password=hash;
                     //Guardar usuario
+                    newUser.desbloqueados=[];
                     newUser.save()
                     .then(user=>{
                         req.flash('success_msg', 'Ya te has registrado y puedes iniciar session');

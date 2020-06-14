@@ -4,6 +4,7 @@ const {ensureAuthenticated}= require('../config/auth');
 
 const Curso=require('../models/Curso');
 const Pregunta=require('../models/Pregunta');
+const User=require('../models/User');
 
 
 
@@ -17,9 +18,12 @@ Curso.findOne({_id:req.query.id}, function(err, cursos) {
 
 //EDITRAR CURSO
 router.get ('/editCurso/*',ensureAuthenticated, (req, res)=>
-Curso.findOne({_id:req.query.id}, function(err, cursos) {
- res.render('editCurso',{
-    cursos:cursos
+Curso.findOne({_id:req.query.id}, function(err, curso) {
+    Curso.find({},function(err,cursos){
+        res.render('editCurso',{
+            curso:curso,
+            cursos:cursos
+    })
  })
 }));
 
@@ -32,6 +36,25 @@ Curso.findOne({_id:req.query.id}, function(err, cursos) {
  })
 }));
 router.get ('/deleteTrue/*',ensureAuthenticated, function(req, res){
+    Curso.findById(req.query.id,function(err,cur){
+        if(err){
+            console.log(err)
+        }else{
+            if(cur){
+                User.find({desbloqueados:cur})
+                .then(us=>{
+                    us.forEach(usr=>{
+                        if(usr){
+                            usr.desbloqueados.pull(cur);
+                            usr.save();
+                        }
+                    })
+                })
+            }
+        }
+        
+    });
+
     Curso.findByIdAndDelete(req.query.id,function(err){
         if(err) res.render('delete',{
             errors
@@ -84,7 +107,7 @@ router.post('/createPregunta/*',(req,res)=>Curso.findOne({_id:req.query.id}, fun
 
 //Edit Curso Handle
 router.post('/editCurso/*',(req,res)=>Curso.findOne({_id:req.query.id}, function(err, cursos){
-    const{name,description,level}=req.body;
+    const{name,description,level,aUnlock,bUnlock,unlocked}=req.body;
     let errors=[];
 
     if(!name || !description){
@@ -100,7 +123,36 @@ router.post('/editCurso/*',(req,res)=>Curso.findOne({_id:req.query.id}, function
             cursos.description=description;
             cursos.level=level;
 
+            a1=Curso.findOne({_id:aUnlock})
+            .then(aunl=>{
+                if(aunl){
+                    cursos.aUnlock=aunl;
+                }else{
+                    cursos.aUnlock=null;
+                }
+
+            })
+            .catch(err=> cursos.aUnlock=null);
+
+            a2=Curso.findOne({_id:aUnlock})
+            .then(bunl=>{
+                if(bunl){
+                    cursos.bUnlock=bunl;
+                }else{
+                    cursos.aUnlock=null;
+                }
+            
+         }).catch(err=>err=> cursos.aUnlock=null);
+
+         if(unlocked==="true"){
+            cursos.unlocked=true;
+        }else{
+            cursos.unlocked=false;
+        }
+
+         Promise.all([a1,a2]).then(correcto=>{
             cursos.save();
+        });
             res.redirect('/dashboard');
         }
 

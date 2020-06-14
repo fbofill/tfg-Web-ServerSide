@@ -12,11 +12,54 @@ const Pregunta = require ('../models/Pregunta');
 
 
 //GET CURSOS
-router.get ('/getCursos/', (req, res)=>
-Curso.find({}, function(err, cursos) {
- res.json(cursos);
- })
+router.post ('/getCursos/', (req, res)=>{
+    var post_data = req.body;
+    var id=post_data.id;
+    User.findById(id).then(usr=>{
+         if(usr){
+            Curso.find({_id:usr.desbloqueados}).then(cur=>{
+                if(cur){
+                    res.json(cur);
+                } 
+            })
+        }
+    })      
+}
 );
+
+//END QUIZ
+router.post('/endQuiz',(req,res)=>{
+    var post_data = req.body;
+
+    var userid=post_data.userid;
+    var points=post_data.points;
+    var cursoname=post_data.cursoname;
+
+    points=parseInt(points,10);
+    
+
+    User.findById(userid).then(usr=>{
+        if(usr){
+        usr.points=usr.points+points;
+           Curso.findOne({name:cursoname}).then(cur=>{
+               if(cur){
+                   if(points<5){
+                       Curso.findById(cur.bUnlock).then(add=>{
+                        usr.desbloqueados.push(add);
+                        usr.save();
+                       });
+                   }else{
+                    Curso.findById(cur.aUnlock).then(add=>{
+                        usr.desbloqueados.push(add);
+                        usr.save();
+                       });
+                   }
+                   res.json(usr);
+               } 
+           })
+       }
+   })
+});
 
 
 //API REGISTER HANDLE

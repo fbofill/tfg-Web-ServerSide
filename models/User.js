@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Pregunta=require('../models/Curso');
+Schema = mongoose.Schema;
 
 const UserSchema = new mongoose.Schema({
     name:{
@@ -19,7 +21,11 @@ const UserSchema = new mongoose.Schema({
     },
     points:{
         type: Number
-    }
+    },
+    desbloqueados:[
+        {type:Schema.Types.ObjectId, 
+        ref: 'Curso'
+    }]
 });
 
 const User=mongoose.model('User', UserSchema);

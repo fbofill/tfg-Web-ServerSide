@@ -1,5 +1,6 @@
 const Pregunta=require('../models/Pregunta');
-const mongoose = require('mongoose'),Schema = mongoose.Schema;
+const mongoose = require('mongoose'),
+Schema = mongoose.Schema;
 
 const CursoSchema=new mongoose.Schema({
     name:{
@@ -18,7 +19,22 @@ const CursoSchema=new mongoose.Schema({
         type:Schema.Types.ObjectId, 
         ref: 'Pregunta',
         required:true
-    }]
+    }],
+    aUnlock:{
+        type:Schema.Types.ObjectId, 
+        ref: 'Curso',
+        default:null
+
+    },
+    bUnlock:{
+        type:Schema.Types.ObjectId, 
+        ref: 'CursoSchema',
+        default:null
+    },
+    unlocked:{
+        type:Boolean,
+        default:false
+    }
 });
 
 const Curso=mongoose.model('Curso',CursoSchema);

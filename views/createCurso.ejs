@@ -35,6 +35,28 @@
                 <option value="avanzado">Avanzado</option>
               </select>   
           </div>
+          <div class="form-group">
+            <label for="aUnlock">Aprobar desbloquea</label>
+              <select class="form-control" id="aUnlock" name="aUnlock">
+                <option value="none">Ninguno</option>
+                <% cursos.forEach(function(cursos){%>
+                <option value="<%= cursos._id %>"><%= cursos.name %></option>
+                <% })%>
+              </select>   
+          </div>
+          <div class="form-group">
+            <label for="bUnlock">Aprobar desbloquea</label>
+              <select class="form-control" id="bUnlock" name="bUnlock">
+                <option value="none">Ninguno</option>
+                <% cursos.forEach(function(cursos){%>
+                  <option value="<%= cursos._id %>"><%= cursos.name %></option>
+                  <% })%>
+              </select>   
+          </div>
+          <div class="form-group">
+            <label for="unlocked">Desbloqueado de inicio</label>
+            <input type="checkbox" id="unlocked" name="unlocked" value=true>
+          </div>
           <button type="submit" class="btn btn-primary btn-block">Crear curso</button>
         </form>
       </div>
