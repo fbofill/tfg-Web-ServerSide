@@ -2,7 +2,7 @@
     <div class="col-md-6 m-auto">
       <div class="card card-body">
         <h1 class="text-center mb-3">
-          <i class="fas fa-book"></i> Crear Cruso</h1>
+          <i class="fas fa-book"></i> Crear Curso</h1>
           <%- include('./partials/messages.ejs'); %>
         <form action="/dashboard/createCurso" method="POST">
           <div class="form-group">
@@ -17,7 +17,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="description">Descripcion</label>
+            <label for="description">Descripción</label>
             <input
               type="text"
               id="description"
@@ -45,7 +45,7 @@
               </select>   
           </div>
           <div class="form-group">
-            <label for="bUnlock">Aprobar desbloquea</label>
+            <label for="bUnlock">No aprobar desbloquea</label>
               <select class="form-control" id="bUnlock" name="bUnlock">
                 <option value="none">Ninguno</option>
                 <% cursos.forEach(function(cursos){%>
