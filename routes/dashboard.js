@@ -76,7 +76,7 @@ Curso.find({}, function(err, cursos) {
                 newCurso.save();
             });
   
-            if(unlocked==="true"){
+            /*if(unlocked==="true"){
                 User.find({})
                 .then(us=>{
                     us.forEach(usr => {
@@ -86,7 +86,7 @@ Curso.find({}, function(err, cursos) {
                         }
                     });
                 });
-            } 
+            }*/ 
              
         }
     });

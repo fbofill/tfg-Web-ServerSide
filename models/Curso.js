@@ -34,6 +34,10 @@ const CursoSchema=new mongoose.Schema({
     unlocked:{
         type:Boolean,
         default:false
+    },
+    publicado:{
+        type:Boolean,
+        default:false
     }
 });
 

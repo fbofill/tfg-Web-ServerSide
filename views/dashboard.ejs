@@ -5,7 +5,11 @@
 <div class="card-columns">
   <% cursos.forEach(function(cursos){%>
   <div class="card">
-    <img class="card-img-top img-fluid" src="/img/cursoheader.jpg" alt="Card image cap">
+    <img class="card-img-top img-fluid  
+    <% if (cursos.publicado===false) { %>
+      unpublished
+    <% } %>"
+    src="/img/cursoheader.jpg" alt="Card image cap">
     <div class="card-body">
       <a href="/curso/?id=<%= cursos.id %>">
       <h4 class="card-title"> <%= cursos.name %></h4>
@@ -21,3 +25,5 @@
 <div class="container">
     <a class="btn btn-primary btn-lg btn-block" href="/dashboard/createCurso" role="button">Crear curso</a>
 </div>
+
+

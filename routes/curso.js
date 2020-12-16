@@ -16,7 +16,7 @@ Curso.findOne({_id:req.query.id}, function(err, cursos) {
  })
 }));
 
-//EDITRAR CURSO
+//EDITAR CURSO
 router.get ('/editCurso/*',ensureAuthenticated, (req, res)=>
 Curso.findOne({_id:req.query.id}, function(err, curso) {
     Curso.find({},function(err,cursos){
@@ -62,6 +62,77 @@ router.get ('/deleteTrue/*',ensureAuthenticated, function(req, res){
         res.redirect('/dashboard');
     })
 });
+
+//PUBLICAR CURSO
+router.get ('/publicarCurso/*',ensureAuthenticated, (req, res)=>
+Curso.findOne({_id:req.query.id}, function(err, curso) {
+    let orden;
+    if (curso.publicado===false){
+        orden="publicar";
+    }else{
+        orden="despublicar";
+    }
+
+    res.render('publicarCurso',{
+        id:curso.id,
+        orden:orden        
+    })
+}));
+
+router.get ('/publicaTrue/*',ensureAuthenticated, function(req, res){
+    Curso.findById(req.query.id,function(err,cur){
+        let pub;
+        if(err){
+            console.log(err)
+        }else{
+            if(cur){
+             if(cur.publicado===true){
+                 cur.publicado=false;
+                 pub=false;
+
+             }else{
+                cur.publicado=true;
+                pub=true;
+             }
+            }      
+        } 
+
+        if(cur.unlocked===true && pub===true){
+            User.find({})
+            .then(us=>{
+                us.forEach(usr => {
+                    if(usr){
+                        usr.desbloqueados.push(cur);
+                        usr.save();
+                    }
+                });
+            });
+        }
+        else if(cur.unlocked===true && pub===false){
+            User.find({})
+            .then(us=>{
+                us.forEach(usr => {
+                    if(usr){
+                        usr.desbloqueados.pull(cur);
+                        usr.save();
+                    }
+                });
+            });
+        } 
+        cur.save();     
+    });
+    res.redirect('/dashboard');
+});
+
+
+router.get ('/*',ensureAuthenticated,(req, res)=>
+    Curso.findOne({_id:req.query.id}, function(err, cursos) {
+        res.render('curso',{
+            cursos:cursos,
+           }); 
+                    
+}));
+
 
 router.get ('/*',ensureAuthenticated,(req, res)=>
     Curso.findOne({_id:req.query.id}, function(err, cursos) {
