@@ -14,7 +14,7 @@
         <% user.forEach(function(user){ %>
         <tr>
             <td><%= i%></td>
-            <td><%= user.name %></td>
+            <td><a href="/profile/?id=<%= user.id %>" ><%= user.name %></td></a>
             <td><%= user.points %></td>
         </tr>
         <%  i++; %>    

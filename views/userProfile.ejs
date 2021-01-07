@@ -1,0 +1,30 @@
+<%- include('./partials/navbar.ejs'); %>
+<h1 class="mt-4">PERFIL</h1>
+
+<div class="container">
+    <div>
+        <img src="/img/profile.svg" alt="profile" class="avatar float-left">
+    </div>
+    <div>
+        <table >
+            <tbody>
+            <tr>
+                <td><h3>Nombre</h3></td>
+                <td><h3 class="primary"><%= user.name %></h3></td>
+            </tr>
+            <tr>
+                <td><h4>Email</h4></td>
+                <td><h4><%= user.email %></h4></td>
+            </tr>
+            <tr>
+                <td><h4>Puntos</h4></td>
+                <td><h4><%= user.points%></h4></td>
+            </tr>
+            </tbody>
+        </table>
+    </div> 
+</div>
+<hr/>
+<div class="container">
+    <h4>Cursos completados</h4>
+</div>
