@@ -25,7 +25,11 @@ const UserSchema = new mongoose.Schema({
     desbloqueados:[
         {type:Schema.Types.ObjectId, 
         ref: 'Curso'
-    }]
+    }],
+    completados:[  
+            {type:Schema.Types.ObjectId, 
+                ref: 'Curso'
+            }]
 });
 
 const User=mongoose.model('User', UserSchema);

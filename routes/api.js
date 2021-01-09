@@ -46,11 +46,13 @@ router.post('/endQuiz',(req,res)=>{
                    if(points<5){
                        Curso.findById(cur.bUnlock).then(add=>{
                         usr.desbloqueados.push(add);
+                        usr.completados.push(cur);
                         usr.save();
                        });
                    }else{
                     Curso.findById(cur.aUnlock).then(add=>{
                         usr.desbloqueados.push(add);
+                        usr.completados.push(cur);
                         usr.save();
                        });
                    }

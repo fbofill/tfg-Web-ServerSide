@@ -28,3 +28,10 @@
 <div class="container">
     <h4>Cursos completados</h4>
 </div>
+<div class="container">
+    <ul>
+        <% cursos.forEach(function(cursos){%>
+            <li> <%= cursos.name %> </li>
+        <% })%>
+    </ul>
+</div>
