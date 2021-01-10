@@ -20,10 +20,15 @@ Curso.find({}, function(err, cursos) {
 //DASHBOARD
 router.get ('/dashboard',ensureAuthenticated, (req, res)=>
 Curso.find({}, function(err, cursos) {
- res.render('dashboard',{
-     name: req.user.name,
-     cursos:cursos  
-    });  
+    console.log("POINTS " + req.user.points);
+    if(req.user.points){
+        res.render('disclaimer');
+    }else{
+        res.render('dashboard',{
+            name: req.user.name,
+            cursos:cursos  
+           }); 
+    }  
  }));
 
  //RANKING

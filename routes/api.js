@@ -47,7 +47,9 @@ router.post('/endQuiz',(req,res)=>{
                     return ya.equals(cur._id);
                   });
                   if(!yaCompletado){
-                    usr.points=usr.points+points;
+                      if(usr.points){
+                        usr.points=usr.points+points;
+                    }
                     if(points<5){
                         Curso.findById(cur.bUnlock).then(add=>{
                          usr.desbloqueados.push(add);   
