@@ -67,7 +67,7 @@ router.post('/endQuiz',(req,res)=>{
                     });
                     score=points;
                     const comp = new Completados();
-                    comp.usuario=usr;
+                    comp.usuario=usr.name;
                     comp.curso=cur.name;
                     comp.score=points;
                     console.log("COMP "+comp);

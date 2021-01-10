@@ -13,8 +13,7 @@ const Completados = require('../models/Completados');
 
 router.get ('/*',ensureAuthenticated,(req, res)=>
     User.findOne({_id:req.query.id}, function(err, user) {
-        Completados.find({usuario:user},function(err, completados){
-            console.log(completados);
+        Completados.find({usuario:user.name},function(err, completados){
             res.render('userProfile',{
             user:user,
             completados:completados

@@ -5,9 +5,7 @@ const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
 const CompletadosSchema=new mongoose.Schema({
-    usuario:  
-        {type:Schema.Types.ObjectId, 
-            ref: 'User',
+    usuario:{type:String, 
             required:true
         },
     curso:{

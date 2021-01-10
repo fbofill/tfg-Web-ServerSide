@@ -2,6 +2,7 @@
 <h1 class="mt-4"><%= cursos.name %></h1>
 <p class="lead mb-3">Preguntas:</p>
 
+
  <% var i=1 ;%>
  <div class="card-columns">
   <% cursos.pregunta.forEach(function(pregunta){%>
@@ -17,6 +18,7 @@
  <% })%>
 </div>
 
+
 <div class="container">
   <div class="row">
     <div class="col-sm">
@@ -31,6 +33,9 @@
     <div class="col-sm">
       <a class="btn btn-primary btn-lg btn-block" href="/curso/editCurso/?id=<%=cursos.id %>" role="button">Editar curso</a>
       <a class="btn btn-secondary btn-lg btn-block" href="/curso/deleteCurso/?id=<%=cursos.id %>" role="button">Eliminar curso</a>
+    </div>
+    <div class="col-sm">
+      <a class="btn btn-primary btn-lg btn-block" href="/curso/estadisticas/?id=<%=cursos.id %>" role="button">Estadísticas del curso</a>
     </div>
   </div>
 </div>

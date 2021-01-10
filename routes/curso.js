@@ -3,6 +3,7 @@ const router = express.Router();
 const {ensureAuthenticated}= require('../config/auth');
 
 const Curso=require('../models/Curso');
+const Completados=require('../models/Completados');
 const Pregunta=require('../models/Pregunta');
 const User=require('../models/User');
 
@@ -14,6 +15,17 @@ Curso.findOne({_id:req.query.id}, function(err, cursos) {
  res.render('createPregunta',{
     id:cursos.id
  })
+}));
+
+
+router.get ('/estadisticas/*',ensureAuthenticated, (req, res)=>
+Curso.findOne({_id:req.query.id}, function(err, cursos) {
+    Completados.find({curso:cursos.name},function(err,completados){
+        res.render('statistics',{
+            cursos:cursos,
+            completados:completados
+         })
+    })
 }));
 
 //EDITAR CURSO

@@ -30,14 +30,14 @@
 </div>
 
 <div class="container">
-    <ul>
+    <ul class="list-group">
         <% completados.forEach(function(completados){%>
-            <li><div class="container">
+            <li class="list-group-item d-flex justify-content-between align-items-center"><div class="container">
                 <div class="float-left">
                     <%= completados.curso %> 
                 </div>
                 <div class="float-right">
-                    <%= completados.score %> 
+                    <span class="badge badge-primary badge-pill"><%= completados.score %> </span>  
                 </div>
             </div></li>
         <% })%>
