@@ -1,4 +1,5 @@
 const Pregunta=require('../models/Pregunta');
+
 const mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
@@ -28,7 +29,7 @@ const CursoSchema=new mongoose.Schema({
     },
     bUnlock:{
         type:Schema.Types.ObjectId, 
-        ref: 'CursoSchema',
+        ref: 'Curso',
         default:null
     },
     unlocked:{

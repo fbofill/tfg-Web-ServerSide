@@ -8,15 +8,16 @@ const {ensureAuthenticated}= require('../config/auth');
 //User model
 const User = require ('../models/User');
 const Curso=require('../models/Curso');
+const Completados = require('../models/Completados');
 
 
 router.get ('/*',ensureAuthenticated,(req, res)=>
     User.findOne({_id:req.query.id}, function(err, user) {
-        Curso.find({_id:user.completados},function(err, cursos){
-            console.log(user);
+        Completados.find({usuario:user},function(err, completados){
+            console.log(completados);
             res.render('userProfile',{
             user:user,
-            cursos:cursos
+            completados:completados
            }); 
         })                 
 }));

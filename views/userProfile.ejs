@@ -2,7 +2,7 @@
 <h1 class="mt-4">PERFIL</h1>
 
 <div class="container">
-    <div>
+    <div >
         <img src="/img/profile.svg" alt="profile" class="avatar float-left">
     </div>
     <div>
@@ -28,10 +28,18 @@
 <div class="container">
     <h4>Cursos completados</h4>
 </div>
+
 <div class="container">
     <ul>
-        <% cursos.forEach(function(cursos){%>
-            <li> <%= cursos.name %> </li>
+        <% completados.forEach(function(completados){%>
+            <li><div class="container">
+                <div class="float-left">
+                    <%= completados.curso %> 
+                </div>
+                <div class="float-right">
+                    <%= completados.score %> 
+                </div>
+            </div></li>
         <% })%>
     </ul>
 </div>

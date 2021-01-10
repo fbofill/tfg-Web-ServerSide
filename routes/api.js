@@ -9,6 +9,7 @@ const passport = require('passport');
 const User = require ('../models/User');
 const Curso = require ('../models/Curso');
 const Pregunta = require ('../models/Pregunta');
+const Completados = require ('../models/Completados');
 
 
 //GET CURSOS
@@ -40,22 +41,40 @@ router.post('/endQuiz',(req,res)=>{
 
     User.findById(userid).then(usr=>{
         if(usr){
-        usr.points=usr.points+points;
            Curso.findOne({name:cursoname}).then(cur=>{
                if(cur){
-                   if(points<5){
-                       Curso.findById(cur.bUnlock).then(add=>{
-                        usr.desbloqueados.push(add);
-                        usr.completados.push(cur);
-                        usr.save();
-                       });
-                   }else{
-                    Curso.findById(cur.aUnlock).then(add=>{
-                        usr.desbloqueados.push(add);
-                        usr.completados.push(cur);
-                        usr.save();
-                       });
-                   }
+                  var yaCompletado=usr.completados.some(function(ya){
+                    return ya.equals(cur._id);
+                  });
+                  if(!yaCompletado){
+                    usr.points=usr.points+points;
+                    if(points<5){
+                        Curso.findById(cur.bUnlock).then(add=>{
+                         usr.desbloqueados.push(add);   
+                        });
+                    }else{
+                     Curso.findById(cur.aUnlock).then(add=>{
+                         usr.desbloqueados.push(add);
+                        });
+                    }
+                    usr.completados.push(cur);
+                    usr.save().then(function(){
+                        console.log("Usuario salvado");
+                    }).catch(function(err){
+                        console.log(err);
+                    });
+                    score=points;
+                    const comp = new Completados();
+                    comp.usuario=usr;
+                    comp.curso=cur.name;
+                    comp.score=points;
+                    console.log("COMP "+comp);
+                    comp.save().then(function(){
+                        console.log("Comp salvado");
+                    }).catch(function(err){
+                        console.log(err);
+                    });
+                  }
                    res.json(usr);
                } 
            })
