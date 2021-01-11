@@ -28,6 +28,23 @@ router.post ('/getCursos/', (req, res)=>{
 }
 );
 
+//GET CURSOS COMPLETADO
+router.post ('/getCursosCompletado/', (req, res)=>{
+    var post_data = req.body;
+    var nombre=post_data.name;
+    User.findOne({name:nombre}).then(usr=>{
+         if(usr){
+            Completados.find({usuario:usr.name}).then(cur=>{
+                console.log(cur);
+                if(cur){
+                    res.json(cur);
+                } 
+            })
+        }
+    })      
+}
+);
+
 //END QUIZ
 router.post('/endQuiz',(req,res)=>{
     var post_data = req.body;
