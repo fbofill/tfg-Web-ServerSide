@@ -149,7 +149,6 @@ router.post('/editUser',(req, res)=>User.findOne({_id:req.user.id},function(err,
         if(chagePass){
             bcrypt.genSalt(10,(error, salt)=>
             bcrypt.hash(req.body.password,salt, (error, hash)=>{
-                console.log("HASH: " + hash);
                 if(error) throw err;
                 //Convertir contraseña en hash
                 newUser.password=hash;

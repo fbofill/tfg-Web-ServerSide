@@ -17,7 +17,7 @@ Curso.findOne({_id:req.query.id}, function(err, cursos) {
  })
 }));
 
-
+//ESTADISTICAS DEL CURSO
 router.get ('/estadisticas/*',ensureAuthenticated, (req, res)=>
 Curso.findOne({_id:req.query.id}, function(err, cursos) {
     Completados.find({curso:cursos.name},function(err,completados){

@@ -28,6 +28,46 @@ router.post ('/getCursos/', (req, res)=>{
 }
 );
 
+//DELETE USER
+router.post ('/deleteUser/', (req, res)=>{
+    var post_data = req.body;
+    var id=post_data.id;
+    console.log("ID"+ id);
+    User.findByIdAndDelete(id,function(err){
+        if(err) {
+            console.log("ERROR"+ err);
+        }else{
+            res.json(1);
+        }
+        
+    })   
+});
+
+//EDIT USER
+router.post ('/editUser/', (req, res)=>{
+    var post_data = req.body;
+    const {id,name,email,password,password2}=req.body;
+    User.findById(id).then(usr=>{
+        if(usr){
+          if(name){
+              usr.name=name;
+          }
+          if(email){
+            usr.email=email;
+          }if(password){
+            bcrypt.genSalt(10,(error, salt)=>
+            bcrypt.hash(req.body.password,salt, (error, hash)=>{
+            if(error) throw err;
+            usr.password=hash;
+            }));
+            }
+            usr.save();
+            res.json(usr);
+          }
+        })
+    });
+
+
 //GET CURSOS COMPLETADO
 router.post ('/getCursosCompletado/', (req, res)=>{
     var post_data = req.body;
@@ -69,11 +109,15 @@ router.post('/endQuiz',(req,res)=>{
                     }
                     if(points<5){
                         Curso.findById(cur.bUnlock).then(add=>{
-                         usr.desbloqueados.push(add);   
+                            if(add){
+                                usr.desbloqueados.push(add);
+                            }  
                         });
                     }else{
                      Curso.findById(cur.aUnlock).then(add=>{
-                         usr.desbloqueados.push(add);
+                         if(add){
+                            usr.desbloqueados.push(add);
+                         }
                         });
                     }
                     usr.completados.push(cur);
@@ -149,14 +193,14 @@ router.post('/login',(req,res,next)=>{
     .then(user => {
         if(!user){
             //No existe el usuario
-            res.status(400);
+            res.status(400).send('Email no existe');
         }else{
             bcrypt.compare(password, user.password, (err, isMatch) => {
                 if (err) throw err;
                 if (isMatch) {
                     res.json(user);
                 } else {
-                    res.status(400);
+                    res.status(400).send('Contraseña Incorrecta');
                 }
               });
         }
