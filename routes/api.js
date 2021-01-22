@@ -104,36 +104,31 @@ router.post('/endQuiz',(req,res)=>{
                     return ya.equals(cur._id);
                   });
                   if(!yaCompletado){
-                      if(usr.points){
-                        usr.points=usr.points+points;
+                      if(usr.points>=0){
+                        usr.points+=points;
                     }
+                    usr.completados.push(cur);
                     if(points<5){
                         Curso.findById(cur.bUnlock).then(add=>{
                             if(add){
                                 usr.desbloqueados.push(add);
+                                usr.save();
+
                             }  
                         });
                     }else{
                      Curso.findById(cur.aUnlock).then(add=>{
                          if(add){
-                            usr.desbloqueados.push(add);
+                            usr.desbloqueados.push(add); 
+                            usr.save();
                          }
                         });
                     }
-                    usr.completados.push(cur);
-                    usr.save().then(function(){
-                        console.log("Usuario salvado");
-                    }).catch(function(err){
-                        console.log(err);
-                    });
-                    score=points;
                     const comp = new Completados();
                     comp.usuario=usr.name;
                     comp.curso=cur.name;
                     comp.score=points;
-                    console.log("COMP "+comp);
                     comp.save().then(function(){
-                        console.log("Comp salvado");
                     }).catch(function(err){
                         console.log(err);
                     });
@@ -163,6 +158,7 @@ const {name,email,password,password2,points}=req.body;
                  password,
                  points
              });
+            
              //Hash Password
              bcrypt.genSalt(10,(error, salt)=>
              bcrypt.hash(newUser.password,salt, (error, hash)=>{
@@ -170,11 +166,21 @@ const {name,email,password,password2,points}=req.body;
                  //Convertir contraseña en hash
                  newUser.password=hash;
                  //Guardar usuario
-                 newUser.save()
-                 .then(user=>{
-                    res.json('Ya te has registrado y puedes iniciar session');
-                 })
-                 .catch(err =>console.log(err));
+                 Curso.find({unlocked:"true", publicado:"true"}).then(cur=>{
+                    if(cur){
+                        cur.forEach(curso=>{
+                            if(curso){
+                                newUser.desbloqueados.push(curso);
+                            } 
+                        })
+                        newUser.save()
+                        .then(user=>{
+                           res.json('Ya te has registrado y puedes iniciar session');
+                        })
+                        .catch(err =>console.log(err));
+                    }
+                 }).catch(err=>console.log(err));
+                
              }))
          }
      });

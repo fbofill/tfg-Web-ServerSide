@@ -74,20 +74,7 @@ Curso.find({}, function(err, cursos) {
             
             Promise.all([a1,a2]).then(correcto=>{
                 newCurso.save();
-            });
-  
-            /*if(unlocked==="true"){
-                User.find({})
-                .then(us=>{
-                    us.forEach(usr => {
-                        if(usr){
-                            usr.desbloqueados.push(newCurso);
-                            usr.save();
-                        }
-                    });
-                });
-            }*/ 
-             
+            });           
         }
     });
     }

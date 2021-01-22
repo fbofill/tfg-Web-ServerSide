@@ -20,7 +20,6 @@ Curso.find({}, function(err, cursos) {
 //DASHBOARD
 router.get ('/dashboard',ensureAuthenticated, (req, res)=>
 Curso.find({}, function(err, cursos) {
-    console.log("POINTS " + req.user.points);
     if(req.user.points){
         res.render('disclaimer');
     }else{
